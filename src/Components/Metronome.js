@@ -28,46 +28,55 @@ class Metronome extends Component {
     handleBpmChange = event => {
         const bpm = event.target.value;
         Tone.Transport.cancel();
+        Tone.Transport.stop();
         Tone.Transport.position = "0:0:0"
         
         if(this.state.playing) {
             this.setState({ bpm }, this.playClick)
+            Tone.Transport.start()
         } else {
             this.setState({ bpm });
         }
     }
 
     handleTimeSigChange = e => {
-        const newTimeSig = e.target.value;
-        const { bpm, playing } = this.state
+        const newTimeSig = parseInt(e.target.value);
+        const { playing } = this.state
         
         
         if(playing) {
             Tone.Transport.cancel();
+            Tone.Transport.stop();
             Tone.Transport.position = "0:0:0"
-
             this.setState({
+                playing: false
+            })
+            this.setState({
+                playing: true,
                 timeSig: newTimeSig,
             }, this.playClick)
+            Tone.Transport.start()
         } else {
             this.setState({ timeSig: newTimeSig });
         }
     }
 
     handleAccentChange = (e) => {
-        const accent = e.target.value
+        // const accent = e.target.value
         Tone.Transport.cancel();
+        Tone.Transport.stop();
         Tone.Transport.position = 0
 
         if(this.state.playing) {
             this.setState({accent: !this.state.accent}, this.playClick)
+            Tone.Transport.start()
         } else {
             this.setState({accent: !this.state.accent})
         }
     }
     
     startStop = () => {
-        const { count, time } = this.state;
+        // const { time } = this.state;
 
         StartAudioContext(Tone.context)
 
@@ -87,7 +96,7 @@ class Metronome extends Component {
 
     playClick = () => {
         const bpmNum = parseInt(this.state.bpm);
-        const { position, playing, count, timeSig, time } = this.state;
+        const { timeSig } = this.state;
         // const osc = new Tone.Oscillator().toDestination();
         
         Tone.Transport.bpm.value = bpmNum;
@@ -109,7 +118,7 @@ class Metronome extends Component {
     }
 
     render() {
-        const { position, playing, bpm } = this.state;
+        const { playing, bpm } = this.state;
         const newPosition = parseInt(Tone.Transport.position.split(':')[1])
 
         return (

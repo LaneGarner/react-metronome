@@ -1,10 +1,11 @@
-import logo from './logo.svg';
 import './App.css';
+import Metronome from './Components/Metronome';
+
 
 function App() {
   return (
     <div>
-      
+      <Metronome />
     </div>
   );
 }
