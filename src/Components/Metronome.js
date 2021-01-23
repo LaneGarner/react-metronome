@@ -6,7 +6,7 @@ import { Accent } from "./Accent"
 import click1 from '../click1.flac';
 import click2 from '../click2.wav';
 import click3 from '../click3.wav';
-import StartAudioContext from 'startaudiocontext'
+// import StartAudioContext from 'startaudiocontext'
 
 
 class Metronome extends Component {
@@ -17,9 +17,9 @@ class Metronome extends Component {
             playing: false,
             bpm: 120,
             timeSig: 4,
-            subdivision: '',
-            tick: true,
-            position: '0:0:0',
+            subdivision: "",
+            // tick: true,
+            position: "0:0:0",
             accent: false,
     };
     this.click1 = new Tone.Player(click1).toDestination()
@@ -36,13 +36,17 @@ class Metronome extends Component {
 
     handleBpmChange = event => {
         const bpm = event.target.value;
+        // Tone.Transport.stop();
+        Tone.Transport.cancel();
+        Tone.Transport.position = "0:0:0"
         
         if(this.state.playing) {
             // Stop the old timer and start a new one
-            Tone.Transport.cancel();
+            // Tone.Transport.cancel();
             // this.timer = setInterval(this.playClick);
             this.setState({
-                bpm: bpm,
+                bpm
+                // position: "0:0:0",
                 // playing: true
                 // Play a click "immediately" (after setState finishes)
             }, this.playClick)
@@ -50,24 +54,30 @@ class Metronome extends Component {
             // Otherwise just update the BPM
             this.setState({ bpm });
         }
-        }
+    }
 
-    handleTimeChange = e => {
-        const timeSig = e.target.value;
-        const { playing } = this.state
+    handleTimeSigChange = e => {
+        const newTimeSig = e.target.value;
+        const { bpm, playing } = this.state
+        
         
         if(playing) {
-            // Stop the old timer and start a new one
             Tone.Transport.cancel();
+            Tone.Transport.position = "0:0:0"
+            // Tone.Transport.cancel();
+            // Tone.Transport.position = 0
+            // Stop the old timer and start a new one
+            // Tone.Transport.cancel();
             // this.timer = setInterval(this.playClick);
             this.setState({
-                timeSig: timeSig,
+                timeSig: newTimeSig,
+                // position: "0:0:0",
                 // playing: true
                 // Play a click "immediately" (after setState finishes)
             }, this.playClick)
         } else {
             // Otherwise just update the BPM
-            this.setState({ timeSig });
+            this.setState({ timeSig: newTimeSig });
         }
     }
 
@@ -118,7 +128,7 @@ class Metronome extends Component {
 
         if(!this.state.playing) {
             this.setState({
-                count: 0,
+                // count: 0,
                 playing: true
                 // Play a click "immediately" (after setState finishes)
             }, this.playClick)
@@ -140,6 +150,8 @@ class Metronome extends Component {
     }
 
     playClick = () => {
+        // Tone.Transport.start();
+
         const bpmNum = parseInt(this.state.bpm);
         const { position, playing, count, timeSig, time } = this.state;
         // var filt = new Tone.Filter().toMaster();
@@ -224,12 +236,12 @@ class Metronome extends Component {
 
     render() {
         const { position, playing, bpm } = this.state;
-        const newPosition = parseInt(position.split(':')[1])
+        const newPosition = parseInt(Tone.Transport.position.split(':')[1])
 
         return (
             <div className="metronome">
             <Accent handleAccentChange={this.handleAccentChange}/>
-            <TimeSigSelect handleTimeChange={this.handleTimeChange} />
+            <TimeSigSelect handleTimeSigChange={this.handleTimeSigChange} />
             <div className="bpm-slider">
                 <label htmlFor="bpmSlider">Tempo</label>
                 <div>{bpm} BPM</div>
