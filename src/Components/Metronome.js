@@ -6,6 +6,7 @@ import { Accent } from "./Accent"
 import click1 from '../click1.flac';
 import click2 from '../click2.wav';
 import click3 from '../click3.wav';
+import StartAudioContext from 'startaudiocontext'
 
 class Metronome extends Component {
     constructor(props) {
@@ -67,6 +68,8 @@ class Metronome extends Component {
     
     startStop = () => {
         const { count, time } = this.state;
+
+        StartAudioContext(Tone.context)
 
         if(!this.state.playing) {
             this.setState({
