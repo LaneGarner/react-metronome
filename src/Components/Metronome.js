@@ -18,7 +18,7 @@ class Metronome extends Component {
             timeSig: 4,
             subdivision: "",
             position: "0:0:0",
-            accent: true,
+            accent: false,
     };
     this.click1 = new Tone.Player(click1).toDestination()
     this.click2 = new Tone.Player(click2).toDestination()
