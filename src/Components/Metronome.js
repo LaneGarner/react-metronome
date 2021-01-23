@@ -102,6 +102,13 @@ class Metronome extends Component {
         Tone.Transport.bpm.value = bpmNum;
         Tone.Transport.timeSignature = timeSig;        
         
+        this.state.accent && (
+        Tone.Transport.scheduleRepeat((time) => {
+            this.click1.start(time)
+        }, "1m")
+        )        
+        Tone.Transport.start();
+        
         Tone.Transport.scheduleRepeat((time) => {
             this.setState({
                 position: Tone.Transport.position
@@ -109,12 +116,6 @@ class Metronome extends Component {
             this.click3.start(time)
         }, "4n");
 
-        this.state.accent && (
-        Tone.Transport.scheduleRepeat((time) => {
-            this.click1.start(time)
-        }, "1m")
-        )        
-        Tone.Transport.start();
     }
 
     render() {

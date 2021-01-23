@@ -1,13 +1,15 @@
 import './App.css';
 import Metronome from './Components/Metronome';
+import { Drone } from './Components/Drone';
 
-
-function App() {
+export const App = () => {
   return (
-    <div>
+    <>
+      <header>
+        <h1 style={{textAlign:"center"}}>metdrone</h1>
+      </header>
       <Metronome />
-    </div>
+      <Drone />
+    </>
   );
 }
-
-export default App;

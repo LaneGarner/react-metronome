@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Metronome from './Components/Metronome';
+import { App } from "./App";
 
-ReactDOM.render(<Metronome />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));

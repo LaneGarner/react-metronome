@@ -12,13 +12,15 @@
 
 .metronome button {
     background: #333;
-    padding: .5em;
+    padding: .8em;
     margin: .5em;
     border: none;
     border-radius: 2em;
+    outline: 2em;
     /* width: 1em; */
     color: #fff;
     font-size: 18px;
+    width: 100px;
 }
 
 .Slider {
